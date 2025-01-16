@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController("/")
+@RestController
 @RequiredArgsConstructor
 public class IndexController {
 
