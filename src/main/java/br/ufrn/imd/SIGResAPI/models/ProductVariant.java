@@ -29,6 +29,9 @@ public class ProductVariant {
 
     private String name;
     private float price;
+    private int amount;
+    private boolean inHappyHour;
+    private float priceInHappyHour;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)

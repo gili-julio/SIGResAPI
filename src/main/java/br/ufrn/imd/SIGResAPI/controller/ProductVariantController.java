@@ -53,7 +53,8 @@ public class ProductVariantController {
     public ResponseEntity<ProductVariant> createProductVariant(@RequestBody ProductVariantRequestDTO body) {
         Product product = productRepository.findById(body.product().getId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        ProductVariant productVariant = new ProductVariant(null, body.name(), body.price(), product);
+        ProductVariant productVariant = new ProductVariant(null, body.name(), body.price(), 0, body.inHappyHour(),
+                body.priceInHappyHour(), product);
         productVariantRepository.save(productVariant);
         return ResponseEntity.ok(productVariant);
     }
@@ -65,6 +66,8 @@ public class ProductVariantController {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         productVariant.setName(body.name());
         productVariant.setPrice(body.price());
+        productVariant.setInHappyHour(body.inHappyHour());
+        productVariant.setPriceInHappyHour(body.priceInHappyHour());
         productVariantRepository.save(productVariant);
         return ResponseEntity.ok(productVariant);
     }
