@@ -31,6 +31,9 @@ public class Product {
 
     private String name;
     private float price;
+    private int amount;
+    private boolean inHappyHour;
+    private float priceInHappyHour;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
