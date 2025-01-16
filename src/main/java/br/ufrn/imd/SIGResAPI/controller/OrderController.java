@@ -20,6 +20,8 @@ import br.ufrn.imd.SIGResAPI.repository.ProductRepository;
 import br.ufrn.imd.SIGResAPI.repository.ProductVariantRepository;
 import br.ufrn.imd.SIGResAPI.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,12 +95,18 @@ public class OrderController {
             ProductVariant productVariant = productVariantRepository.findById(body.productId())
                     .orElseThrow(() -> new RuntimeException("Order not found"));
             order.setProductVariant(productVariant);
+            if (productVariant.getAmount() < body.amount()) {
+                return ResponseEntity.badRequest().build();
+            }
             SaleDTO saleDTO = new SaleDTO(true, productVariant.getId(), body.amount(), user.getId());
             saleController.doSale(saleDTO);
         } else {
             Product product = productRepository.findById(body.productId())
                     .orElseThrow(() -> new RuntimeException("Order not found"));
             order.setProduct(product);
+            if (product.getAmount() < body.amount()) {
+                return ResponseEntity.badRequest().build();
+            }
             SaleDTO saleDTO = new SaleDTO(false, product.getId(), body.amount(), user.getId());
             saleController.doSale(saleDTO);
         }
@@ -114,6 +122,12 @@ public class OrderController {
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         order.setActive(false);
         orderRepository.save(order);
+    }
+
+    public List<Order> getOrdersByDate(Date initDate, Date finalDate) {
+        List<Order> orders = orderRepository.findAll();
+        orders.removeIf(order -> (order.getTime().before(initDate)) || (order.getTime().after(finalDate)));
+        return orders;
     }
 
 }
