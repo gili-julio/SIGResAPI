@@ -25,8 +25,15 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     @GetMapping
-    public List<Product> allProducts() {
-        return productRepository.findAll();
+    public ResponseEntity<List<Product>> allProducts() {
+        return ResponseEntity.ok(productRepository.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> product(@PathVariable Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        return ResponseEntity.ok(product);
     }
 
     @PostMapping

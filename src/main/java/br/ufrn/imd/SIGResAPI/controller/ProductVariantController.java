@@ -31,22 +31,22 @@ public class ProductVariantController {
     ProductRepository productRepository;
 
     @GetMapping
-    public List<ProductVariant> allProductsVariants() {
-        return productVariantRepository.findAll();
+    public ResponseEntity<List<ProductVariant>> allProductsVariants() {
+        return ResponseEntity.ok(productVariantRepository.findAll());
     }
 
     @GetMapping("/{id}")
-    public ProductVariant productVariant(@PathVariable Long id) {
+    public ResponseEntity<ProductVariant> productVariant(@PathVariable Long id) {
         ProductVariant productVariant = productVariantRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product Variant not found"));
-        return productVariant;
+        return ResponseEntity.ok(productVariant);
     }
 
     @GetMapping("/by-product/{id}")
-    public List<ProductVariant> allProductVariants(@PathVariable Long id) {
+    public ResponseEntity<List<ProductVariant>> allProductVariants(@PathVariable Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        return productVariantRepository.findByProduct(product);
+        return ResponseEntity.ok(productVariantRepository.findByProduct(product));
     }
 
     @PostMapping
