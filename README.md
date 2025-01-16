@@ -10,6 +10,7 @@
 - [X] Usuários
 - [X] Estoque
 - [X] Pedidos
+- [X] Vendas
 - [ ] Relatórios
 - [ ] Armazenar configurações do estabelecimento (Num mesas, nome, bate-papo ativo, ícone)
 - [ ] Mensagens (Bate-papo)
