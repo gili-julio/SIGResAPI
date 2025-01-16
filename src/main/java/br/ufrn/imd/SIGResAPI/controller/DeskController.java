@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.ufrn.imd.SIGResAPI.models.Desk;
+import br.ufrn.imd.SIGResAPI.models.Order;
 import br.ufrn.imd.SIGResAPI.repository.DeskRepository;
+import br.ufrn.imd.SIGResAPI.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -20,7 +23,11 @@ import org.springframework.http.ResponseEntity;
 @RequiredArgsConstructor
 public class DeskController {
 
-    private final DeskRepository deskRepository;
+    @Autowired
+    DeskRepository deskRepository;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     @GetMapping
     public List<Desk> allActiveDesks() {
@@ -35,7 +42,7 @@ public class DeskController {
         List<Desk> desksToCreate = new ArrayList<>();
         for (Long i = 1L; i <= 1000L; i++) {
             if (!deskRepository.existsById(i)) {
-                desksToCreate.add(new Desk(i, false, false));
+                desksToCreate.add(new Desk(i, false, false, null));
             }
         }
         deskRepository.saveAll(desksToCreate);
@@ -76,7 +83,17 @@ public class DeskController {
         if (!desk.isActive()) {
             return ResponseEntity.badRequest().build();
         }
-        desk.setFill(!desk.isFill());
+
+        if (desk.isFill()) {
+            List<Order> ordersInDesk = orderRepository.findByDesk(desk);
+            for (Order order : ordersInDesk) {
+                order.setActive(false);
+            }
+            orderRepository.saveAll(ordersInDesk);
+            desk.setFill(false);
+        } else {
+            desk.setFill(true);
+        }
         deskRepository.save(desk);
         return ResponseEntity.ok(desk);
     }

@@ -51,10 +51,10 @@ public class ProductVariantController {
 
     @PostMapping
     public ResponseEntity<ProductVariant> createProductVariant(@RequestBody ProductVariantRequestDTO body) {
-        Product product = productRepository.findById(body.product().getId())
+        Product product = productRepository.findById(body.productId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         ProductVariant productVariant = new ProductVariant(null, body.name(), body.price(), 0, body.inHappyHour(),
-                body.priceInHappyHour(), product);
+                body.priceInHappyHour(), product, null);
         productVariantRepository.save(productVariant);
         return ResponseEntity.ok(productVariant);
     }
