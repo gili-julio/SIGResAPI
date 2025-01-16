@@ -32,7 +32,13 @@ git clone https://github.com/gili-julio/SIGResAPI.git
 # Acesse a pasta do projeto
 cd SIGResAPI
 
-# Execute o projeto
+# Acesse a pasta resources
+cd src/main/resources
+
+# Crie a tabela "sigres" no postgresql,
+# Altere os dados no arquivo example-application.properties
+# E renomeie para application.properties
+# Agora, é só executar o projeto
 mvn spring-boot:run
 ```
 
