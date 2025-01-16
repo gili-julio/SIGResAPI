@@ -26,21 +26,13 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/teste").hasRole("ADMIN")
-                        .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .usernameParameter("username")
-                        .passwordParameter("password")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/?loginSuccessful=true", true)
-                        .failureUrl("/login?error=true")
-                        .permitAll())
+                                        .requestMatchers(HttpMethod.GET, "/").permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                                        .anyRequest().authenticated())
                 .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                        .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
                         .permitAll()
-                        .logoutSuccessUrl("/?logoutSuccessful=true"))
+                                        .logoutSuccessUrl("/"))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
