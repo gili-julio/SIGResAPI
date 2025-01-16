@@ -11,6 +11,7 @@
 - [X] Estoque
 - [X] Pedidos
 - [ ] Relatórios
+- [ ] Armazenar configurações do estabelecimento (Num mesas, nome, bate-papo ativo, ícone)
 - [ ] Mensagens (Bate-papo)
 - [ ] Organizar permissões (Rotas) de ADMINS e de USERS (Funcionários)
 
