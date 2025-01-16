@@ -54,7 +54,7 @@ public class ProductVariantController {
         Product product = productRepository.findById(body.productId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         ProductVariant productVariant = new ProductVariant(null, body.name(), body.price(), 0, body.inHappyHour(),
-                body.priceInHappyHour(), product, null);
+                body.priceInHappyHour(), product, null, null);
         productVariantRepository.save(productVariant);
         return ResponseEntity.ok(productVariant);
     }

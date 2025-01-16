@@ -45,4 +45,8 @@ public class ProductVariant {
     @OneToMany(mappedBy = "productVariant", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private List<Order> orders;
+
+    @OneToMany(mappedBy = "productVariant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private List<Sale> sales;
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufrn.imd.SIGResAPI.dto.OrderDTO;
+import br.ufrn.imd.SIGResAPI.dto.SaleDTO;
 import br.ufrn.imd.SIGResAPI.models.Desk;
 import br.ufrn.imd.SIGResAPI.models.Order;
 import br.ufrn.imd.SIGResAPI.models.Product;
@@ -19,9 +20,6 @@ import br.ufrn.imd.SIGResAPI.repository.ProductRepository;
 import br.ufrn.imd.SIGResAPI.repository.ProductVariantRepository;
 import br.ufrn.imd.SIGResAPI.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +45,9 @@ public class OrderController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    SaleController saleController;
 
     @GetMapping
     public ResponseEntity<List<Order>> allOrders() {
@@ -92,23 +93,16 @@ public class OrderController {
             ProductVariant productVariant = productVariantRepository.findById(body.productId())
                     .orElseThrow(() -> new RuntimeException("Order not found"));
             order.setProductVariant(productVariant);
-            if (productVariant.getAmount() < body.amount()) {
-                return ResponseEntity.badRequest().build();
-            }
-            productVariant.setAmount(productVariant.getAmount() - body.amount());
-            productVariantRepository.save(productVariant);
+            SaleDTO saleDTO = new SaleDTO(true, productVariant.getId(), body.amount(), user.getId());
+            saleController.doSale(saleDTO);
         } else {
             Product product = productRepository.findById(body.productId())
                     .orElseThrow(() -> new RuntimeException("Order not found"));
             order.setProduct(product);
-            if (product.getAmount() < body.amount()) {
-                return ResponseEntity.badRequest().build();
-            }
-            product.setAmount(product.getAmount() - body.amount());
-            productRepository.save(product);
+            SaleDTO saleDTO = new SaleDTO(false, product.getId(), body.amount(), user.getId());
+            saleController.doSale(saleDTO);
         }
-        String localDateTime = getLocalDateTime();
-        order.setTime(localDateTime);
+        order.setTime(TimeController.getLocalDateTime());
 
         orderRepository.save(order);
 
@@ -122,14 +116,4 @@ public class OrderController {
         orderRepository.save(order);
     }
 
-    private static String getLocalDateTime() {
-        // Obtém a data e hora local atual
-        LocalDateTime localDateTime = LocalDateTime.now();
-
-        // Define o formato desejado para a data e hora
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-
-        // Formata a data e hora no formato especificado
-        return localDateTime.format(formatter);
-    }
 }

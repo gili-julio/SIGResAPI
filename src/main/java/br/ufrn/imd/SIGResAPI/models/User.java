@@ -48,4 +48,8 @@ public class User {
     @JsonBackReference
     private List<Order> orders;
 
+    @OneToMany(mappedBy = "madeBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private List<Sale> sales;
+
 }
