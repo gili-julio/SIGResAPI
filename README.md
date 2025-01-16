@@ -8,10 +8,11 @@
 - [X] Variações de produtos
 - [X] Mesas
 - [X] Usuários
-- [ ] Estoque
-- [ ] Pedidos
+- [X] Estoque
+- [X] Pedidos
 - [ ] Relatórios
 - [ ] Mensagens (Bate-papo)
+- [ ] Organizar permissões (Rotas) de ADMINS e de USERS (Funcionários)
 
 ### Pendências Front Web
 - [ ] Ajustar com base nas alterações da API
