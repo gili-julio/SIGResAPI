@@ -12,12 +12,13 @@
 - [X] Pedidos
 - [X] Vendas
 - [X] Relatórios
-- [ ] Armazenar configurações do estabelecimento (Num mesas, nome, bate-papo ativo, ícone)
-- [ ] Mensagens (Bate-papo)
+- [X] Armazenar configurações do estabelecimento (Num mesas, nome, bate-papo ativo)
+- [X] Mensagens (Bate-papo)
 - [ ] Organizar permissões (Rotas) de ADMINS e de USERS (Funcionários)
 
 ### Pendências Front Web
 - [ ] Ajustar com base nas alterações da API
+- [ ] Ajustar para o front armazenar o ícone do estabelecimento
 - [ ] Integrar a autenticação com a API
 - [ ] Integrar totalmente com os dados da API
 
