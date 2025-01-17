@@ -14,7 +14,7 @@
 - [X] Relatórios
 - [X] Armazenar configurações do estabelecimento (Num mesas, nome, bate-papo ativo)
 - [X] Mensagens (Bate-papo)
-- [ ] Organizar permissões (Rotas) de ADMINS e de USERS (Funcionários)
+- [X] Organizar permissões (Rotas) de ADMINS e de USERS (Funcionários)
 
 ### Pendências Front Web
 - [ ] Ajustar com base nas alterações da API
