@@ -49,7 +49,7 @@ public class DataInitializer implements CommandLineRunner {
         } else {
             adminUser = adminOptUser.get();
         }
-        // Verifica se o usuário já possui o role "ROLE_ADMIN"
+        // Verifica se o admin já possui o role "ROLE_ADMIN"
         if (!adminUser.getRoles().contains(adminRole)) {
             adminUser.getRoles().add(adminRole);
             userRepository.save(adminUser);
@@ -78,6 +78,11 @@ public class DataInitializer implements CommandLineRunner {
         if (!userUser.getRoles().contains(userRole)) {
             userUser.getRoles().add(userRole);
             userRepository.save(userUser);
+        }
+        // Verifica se o admin já possui o role "ROLE_USER"
+        if (!adminUser.getRoles().contains(userRole)) {
+            adminUser.getRoles().add(userRole);
+            userRepository.save(adminUser);
         }
     }
 }

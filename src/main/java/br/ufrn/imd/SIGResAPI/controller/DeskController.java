@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/desk")
@@ -38,6 +39,7 @@ public class DeskController {
     }
 
     @PostMapping("/create-desks")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> createDesks() {
         List<Desk> desksToCreate = new ArrayList<>();
         for (Long i = 1L; i <= 1000L; i++) {
@@ -50,6 +52,7 @@ public class DeskController {
     }
 
     @PostMapping("/active/{amount}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> activeDesks(@PathVariable int amount) {
         if (amount > deskRepository.count()) {
             return ResponseEntity.badRequest().build();

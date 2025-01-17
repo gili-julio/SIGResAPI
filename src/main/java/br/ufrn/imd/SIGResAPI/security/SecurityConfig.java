@@ -26,9 +26,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                                        .requestMatchers(HttpMethod.GET, "/").permitAll()
-                                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                                        .anyRequest().authenticated())
+                        // Rotas públicas
+                        .requestMatchers(HttpMethod.GET, "/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        // Demais rotas somente autenticado
+                        .anyRequest().authenticated())
                 .logout(logout -> logout
                                         .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
                         .permitAll()
