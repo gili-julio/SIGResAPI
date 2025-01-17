@@ -40,7 +40,8 @@ public class UserController {
         if (userRepository.existsByUsername(body.username())) {
             return ResponseEntity.badRequest().build();
         }
-        User user = new User(null, body.username(), passwordEncoder.encode(body.password()), body.roles(), null, null);
+        User user = new User(null, body.username(), passwordEncoder.encode(body.password()), body.roles(), null, null,
+                null);
         userRepository.save(user);
         return ResponseEntity.ok(user);
     }

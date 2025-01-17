@@ -52,4 +52,8 @@ public class User {
     @JsonBackReference
     private List<Sale> sales;
 
+    @OneToMany(mappedBy = "sentBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private List<Message> messages;
+
 }
