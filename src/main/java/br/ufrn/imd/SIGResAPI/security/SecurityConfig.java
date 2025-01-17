@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         // Rotas públicas
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/hello-world").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         // Demais rotas somente autenticado
                         .anyRequest().authenticated())
