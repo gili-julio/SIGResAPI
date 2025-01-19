@@ -26,6 +26,9 @@ public class SystemConfigController {
     @PutMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SystemConfig> updateConfig(@RequestBody SystemConfig newConfig) {
+        if (newConfig.getNumMesas() < 0 || newConfig.getNumMesas() > 1000) {
+            return ResponseEntity.status(405).build();
+        }
         configService.updateConfig(newConfig);
         deskController.activeDesks(newConfig.getNumMesas());
         return ResponseEntity.ok(newConfig);
