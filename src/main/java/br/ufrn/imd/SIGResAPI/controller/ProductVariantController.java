@@ -46,7 +46,7 @@ public class ProductVariantController {
     public ResponseEntity<List<ProductVariant>> allProductVariants(@PathVariable Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        return ResponseEntity.ok(productVariantRepository.findByProduct(product));
+        return ResponseEntity.ok(productVariantRepository.findByProductOrderByIdAsc(product));
     }
 
     @PostMapping("/create")
@@ -57,6 +57,27 @@ public class ProductVariantController {
                 body.priceInHappyHour(), product, null, null);
         productVariantRepository.save(productVariant);
         return ResponseEntity.ok(productVariant);
+    }
+
+    @PostMapping("/{id}/add")
+    public ResponseEntity<Void> incrementProductAmount(@PathVariable Long id) {
+        ProductVariant product = productVariantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product Variant not found"));
+        product.setAmount(product.getAmount() + 1);
+        productVariantRepository.save(product);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{id}/remove")
+    public ResponseEntity<Void> decrementProductAmount(@PathVariable Long id) {
+        ProductVariant product = productVariantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        if (product.getAmount() <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        product.setAmount(product.getAmount() - 1);
+        productVariantRepository.save(product);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")

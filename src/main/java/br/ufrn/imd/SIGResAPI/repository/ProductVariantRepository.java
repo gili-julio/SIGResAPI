@@ -5,9 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import br.ufrn.imd.SIGResAPI.models.Product;
 import br.ufrn.imd.SIGResAPI.models.ProductVariant;
+
 import java.util.List;
 
 @Repository
 public interface ProductVariantRepository extends JpaRepository<ProductVariant, Long> {
-    List<ProductVariant> findByProduct(Product product);
+    List<ProductVariant> findByProductOrderByIdAsc(Product product);
 }
