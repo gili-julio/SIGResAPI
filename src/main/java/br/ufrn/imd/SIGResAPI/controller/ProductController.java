@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -26,7 +27,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<Product>> allProducts() {
-        return ResponseEntity.ok(productRepository.findAll());
+        return ResponseEntity.ok(productRepository.findAll(Sort.by(Sort.Direction.ASC, "id")));
     }
 
     @GetMapping("/{id}")

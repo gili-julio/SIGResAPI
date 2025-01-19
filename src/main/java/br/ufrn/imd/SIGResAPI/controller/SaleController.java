@@ -70,6 +70,7 @@ public class SaleController {
             productRepository.save(product);
         }
         sale.setTime(TimeController.getLocalDateTime());
+        sale.setVariant(saleDTO.isVariant());
         saleRepository.save(sale);
         return sale;
     }
