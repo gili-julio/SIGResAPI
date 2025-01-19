@@ -37,7 +37,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             // Converter as roles do usuário para authorities
             var authorities = user.getRoles().stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().toString().toUpperCase()))
+                    .map(role -> new SimpleGrantedAuthority(role.getName().toString().toUpperCase()))
                     .collect(Collectors.toList());
 
             // Criar o objeto de autenticação com as authorities
