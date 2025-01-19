@@ -18,12 +18,14 @@ import br.ufrn.imd.SIGResAPI.models.Order;
 import br.ufrn.imd.SIGResAPI.models.Product;
 import br.ufrn.imd.SIGResAPI.models.ProductVariant;
 import br.ufrn.imd.SIGResAPI.models.Role;
+import br.ufrn.imd.SIGResAPI.models.SystemConfig;
 import br.ufrn.imd.SIGResAPI.models.User;
 import br.ufrn.imd.SIGResAPI.repository.DeskRepository;
 import br.ufrn.imd.SIGResAPI.repository.OrderRepository;
 import br.ufrn.imd.SIGResAPI.repository.ProductRepository;
 import br.ufrn.imd.SIGResAPI.repository.ProductVariantRepository;
 import br.ufrn.imd.SIGResAPI.repository.RoleRepository;
+import br.ufrn.imd.SIGResAPI.repository.SystemConfigRepository;
 import br.ufrn.imd.SIGResAPI.repository.UserRepository;
 
 @Component
@@ -37,11 +39,12 @@ public class DataInitializer implements CommandLineRunner {
     private final DeskRepository deskRepository;
     private final OrderRepository orderRepository;
     private final SaleController saleController;
+    private final SystemConfigRepository configRepository;
 
     public DataInitializer(UserRepository userRepository, RoleRepository roleRepository,
             PasswordEncoder passwordEncoder, ProductRepository productRepository,
             ProductVariantRepository productVariantRepository, DeskRepository deskRepository,
-            SaleController saleController, OrderRepository orderRepository) {
+            SaleController saleController, OrderRepository orderRepository, SystemConfigRepository configRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -50,6 +53,7 @@ public class DataInitializer implements CommandLineRunner {
         this.deskRepository = deskRepository;
         this.saleController = saleController;
         this.orderRepository = orderRepository;
+        this.configRepository = configRepository;
     }
 
     @Override
@@ -214,5 +218,13 @@ public class DataInitializer implements CommandLineRunner {
                 orderRepository.save(order);
             }
         }
+
+        // Config
+        SystemConfig config = new SystemConfig();
+        config.setBatePapoAtivo(true);
+        config.setNomeEstabelecimento("Meu estabelecimento");
+        config.setNumMesas(1000);
+        config.setId(1L);
+        configRepository.save(config);
     }
 }
