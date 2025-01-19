@@ -15,7 +15,7 @@ import br.ufrn.imd.SIGResAPI.models.User;
 import br.ufrn.imd.SIGResAPI.repository.UserRepository;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -31,11 +31,20 @@ public class SecurityFilter extends OncePerRequestFilter {
         var login = tokenService.validateToken(token);
 
         if (login != null) {
-            User user = userRepository.findByUsername(login).orElseThrow(() -> new RuntimeException("User Not Found"));
-            var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            // Buscar o usuário pelo login
+            User user = userRepository.findByUsername(login)
+                    .orElseThrow(() -> new RuntimeException("User Not Found"));
+
+            // Converter as roles do usuário para authorities
+            var authorities = user.getRoles().stream()
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().toString().toUpperCase()))
+                    .collect(Collectors.toList());
+
+            // Criar o objeto de autenticação com as authorities
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+
         filterChain.doFilter(request, response);
     }
 
