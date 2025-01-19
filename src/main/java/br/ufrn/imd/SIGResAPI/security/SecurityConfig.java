@@ -49,6 +49,18 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hello-world").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        // Rotas para admin
+                        .requestMatchers(HttpMethod.PUT, "/config").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/desk/create-desks").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/desk/active/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/product").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/product/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/product-variant/create").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/product-variant/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/user/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/user/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/user/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                         // Demais rotas somente autenticado
                         .anyRequest().authenticated())
                 .logout(logout -> logout

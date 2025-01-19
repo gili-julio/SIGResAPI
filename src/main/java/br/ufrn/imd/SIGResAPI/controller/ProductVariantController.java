@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/product-variant")
@@ -51,7 +50,6 @@ public class ProductVariantController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductVariant> createProductVariant(@RequestBody ProductVariantRequestDTO body) {
         Product product = productRepository.findById(body.productId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -62,7 +60,6 @@ public class ProductVariantController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductVariant> updateProductVariant(@PathVariable Long id,
             @RequestBody ProductVariantRequestDTO body) {
         ProductVariant productVariant = productVariantRepository.findById(id)
@@ -76,7 +73,6 @@ public class ProductVariantController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteProductVariant(@PathVariable Long id) {
         if (!productVariantRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
