@@ -213,6 +213,7 @@ public class DataInitializer implements CommandLineRunner {
                     SaleDTO saleDTO = new SaleDTO(false, product.getId(), 10, user.getId());
                     saleController.doSale(saleDTO);
                 }
+                order.setVariant(i % 2 == 0);
                 order.setTime(TimeController.getLocalDateTime());
 
                 orderRepository.save(order);

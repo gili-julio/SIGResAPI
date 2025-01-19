@@ -111,6 +111,7 @@ public class OrderController {
             saleController.doSale(saleDTO);
         }
         order.setTime(TimeController.getLocalDateTime());
+        order.setVariant(body.isVariant());
 
         orderRepository.save(order);
 
