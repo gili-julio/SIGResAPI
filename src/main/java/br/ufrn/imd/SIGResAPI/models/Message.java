@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -30,5 +29,5 @@ public class Message {
     private String body;
 
     @Column(nullable = false)
-    private Date sentAt;
+    private String sentAt;
 }

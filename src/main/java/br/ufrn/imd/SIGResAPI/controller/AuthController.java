@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.ufrn.imd.SIGResAPI.dto.LoginRequestDTO;
 import br.ufrn.imd.SIGResAPI.dto.ResponseDTO;
+import br.ufrn.imd.SIGResAPI.dto.UserDTO;
 import br.ufrn.imd.SIGResAPI.models.User;
 import br.ufrn.imd.SIGResAPI.repository.UserRepository;
 import br.ufrn.imd.SIGResAPI.security.TokenService;
@@ -28,7 +29,8 @@ public class AuthController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (passwordEncoder.matches(body.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getUsername(), token));
+            return ResponseEntity.ok(new ResponseDTO(user.getUsername(), token,
+                    new UserDTO(user.getUsername(), null, user.getRoles(), user.getId())));
         }
         return ResponseEntity.badRequest().build();
     }

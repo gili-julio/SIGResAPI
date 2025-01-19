@@ -25,7 +25,7 @@ public class TimeController {
     public static String getLocalDateTimeFormatted() {
         // Formata a data e hora para exibição em String no formato desejado
         LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM - HH:mm");
         return localDateTime.format(formatter);
     }
 }

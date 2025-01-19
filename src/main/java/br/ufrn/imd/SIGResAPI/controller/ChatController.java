@@ -35,7 +35,7 @@ public class ChatController {
         Message message = new Message();
         message.setBody(messageDTO.body());
         message.setSentBy(user);
-        message.setSentAt(TimeController.getLocalDateTime());
+        message.setSentAt(TimeController.getLocalDateTimeFormatted());
         messageRepository.save(message);
         return ResponseEntity.ok(message);
     }
