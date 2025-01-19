@@ -13,6 +13,7 @@ import br.ufrn.imd.SIGResAPI.models.Message;
 import br.ufrn.imd.SIGResAPI.models.User;
 import br.ufrn.imd.SIGResAPI.repository.MessageRepository;
 import br.ufrn.imd.SIGResAPI.repository.UserRepository;
+import br.ufrn.imd.SIGResAPI.service.SystemConfigService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -28,10 +29,16 @@ public class ChatController {
     @Autowired
     MessageRepository messageRepository;
 
+    @Autowired
+    SystemConfigService systemConfigService;
+
     @PostMapping
     public ResponseEntity<Message> sendMessage(@RequestBody MessageDTO messageDTO) {
         User user = userRepository.findById(messageDTO.userId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        if (!systemConfigService.getConfig().isBatePapoAtivo()) {
+            new RuntimeException("Chat not active");
+        }
         Message message = new Message();
         message.setBody(messageDTO.body());
         message.setSentBy(user);
