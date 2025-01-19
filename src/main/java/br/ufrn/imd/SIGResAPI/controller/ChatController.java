@@ -37,7 +37,7 @@ public class ChatController {
         User user = userRepository.findById(messageDTO.userId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (!systemConfigService.getConfig().isBatePapoAtivo()) {
-            new RuntimeException("Chat not active");
+            return ResponseEntity.badRequest().build();
         }
         Message message = new Message();
         message.setBody(messageDTO.body());
@@ -49,6 +49,9 @@ public class ChatController {
 
     @GetMapping
     public ResponseEntity<List<Message>> getAllMessages() {
+        if (!systemConfigService.getConfig().isBatePapoAtivo()) {
+            return ResponseEntity.status(405).build();
+        }
         List<Message> messages = messageRepository.findAll();
         return ResponseEntity.ok(messages);
     }
