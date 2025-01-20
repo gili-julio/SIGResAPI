@@ -17,15 +17,9 @@
 - [X] Organizar permissões (Rotas) de ADMINS e de USERS (Funcionários)
 
 ### Pendências Front Web
-- [ ] Ajustar com base nas alterações da API
-- [ ] Ajustar para o front armazenar o ícone do estabelecimento
-- [ ] Integrar a autenticação com a API
-- [ ] Integrar totalmente com os dados da API
-
-### Pendências Front Mobile
-- [ ] Ajustar com base nas alterações da API
-- [ ] Integrar a autenticação com a API
-- [ ] Integrar totalmente com os dados da API
+- [X] Integrar a autenticação com a API
+- [X] Demais páginas e funcionalidades
+- [ ] Ínicio: integrar dados da api e colocar vendas por dia, semana e mês no gráfico
 
 ## 📦 Como Rodar a API
 ```bash
